@@ -1,0 +1,101 @@
+Introduction to Django
+
+Concept:
+
+Django is a high-level Python web framework that follows the model-view-controller (MVC) architectural pattern. It provides a set of tools and libraries to simplify the 
+process of building web applications. Django is designed to be fast, secure, and scalable, making it a popular choice for developing robust web applications.
+
+Here are some key features of Django:
+
+1. Object-Relational Mapping (ORM): Django includes a powerful ORM that allows you to interact with databases using Python objects.
+2. URL Routing: Django provides a flexible URL routing system that allows you to define URL patterns and map them to corresponding views or functions.
+3. Template Engine: A template engine that enables you to separate the presentation logic from the business logic of your application via dynamic HTML pages
+4. Form Handling: Django provides a comprehensive form handling system that simplifies the process of validating and processing user input. It includes built-in form 
+classes, form validation, and error handling.
+5. Authentication and Authorization: Django offers built-in authentication and authorization mechanisms, allowing you to easily handle user authentication, registration, 
+and access control, etc
+6. Admin Interface: Django comes with a powerful admin interface that automatically generates a user-friendly interface for managing database records. It allows you to 
+easily perform CRUD (Create, Read, Update, Delete) operations on your models without writing any custom code.
+7. Security: Django incorporates various security features to help protect your web application from common security vulnerabilities, such as cross-site scripting (XSS), 
+cross-site request forgery (CSRF), and SQL injection attacks.
+8. Internationalization and Localization: Django supports internationalization (i18n) and localization (l10n), making it easy to develop applications that can be translated 
+into different languages.
+9. Testing and Debugging: Django offers a comprehensive testing framework that allows you to write unit tests and integration tests for your application.
+
+Django follows the batteries included philosophy, meaning it provides a wide range of features out of the box, allowing developers to focus on building their applications 
+rather than reinventing the wheel.
+
+Here is the generic representaion of django project.
+
+
+
+            my_project/
+            ├── manage.py
+            ├── my_project/
+            │   ├── __init__.py
+            │   ├── settings.py
+            │   ├── urls.py
+            │   └── wsgi.py
+            ├── app1/
+            │   ├── migrations/
+            │   ├── __init__.py
+            │   ├── admin.py
+            │   ├── models.py
+            │   ├── serializers.py
+            │   ├── views.py
+            │   └── tests.py
+            └── static/
+                ├── css/
+                ├── js/
+                └── images/
+
+        
+No, you don't have to create all this every damn time. Django has done most of the repeatitive work already. Otherwise why would it be known for its DRY (Don't Repeat 
+Yourself) nature.
+
+Let's get started then,
+1. First create a virtual environment.
+
+
+
+2. Install Django inside your virtual environment
+3. Run the below command to create django project structure.
+
+            django-admin startproject mysite
+        
+You will get this project structure
+
+            mysite/
+                ├── manage.py
+                ├── mysite/
+                │   ├── __init__.py
+                │   ├── settings.py
+                │   ├── urls.py
+                │   └── wsgi.py
+        
+Let's break down the structure:
+
+1. manage.py: File that acts as an entry point for running the project on a development server. It also helps running tests, and managing database migrations, etc
+2. mysite: This is the root directory of the project, which shares the same name as the project itself.
+3. __init__.py: An empty file that signifies the directory as a Python package.
+4. settings.py: The configuration file for the project, where you define settings such as database connection, static files, middleware, installed apps, etc.
+5. urls.py: The URL configuration for the project, where you define the mapping between URLs and views.
+6. wsgi.py: A Web Server Gateway Interface (WSGI) file that acts as an entry point for running the project on a production server.
+
+Django Apps
+
+Each Django project can consist of one or more apps, depending on the complexity and requirements of the project. Apps help organize the codebase and promote modular 
+development, allowing different parts of the project to be developed and maintained separately. Apps in Django typically have their own models, views, templates, and other 
+components specific to their functionality. They can be reusable across projects or specific to a single project.
+
+To create a new app in Django, you can use the following command:
+
+
+            python manage.py startapp myapp
+        
+This will generate the necessary files and folders for the app, including the models.py, views.py, urls.py, and other files that you can customize to implement the desired
+functionality.
+
+Note:
+Once created, the app needs to be added to the project's settings file (settings.py) in the INSTALLED_APPS list. This registers the app with the project and makes its
+functionality available.
