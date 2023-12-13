@@ -1,0 +1,97 @@
+Django Views
+
+To Do
+
+Concept:
+
+In Django, views are Python functions or classes that handle HTTP requests and return HTTP responses. They define the logic behind the web application and determine what 
+content is displayed to the user.
+
+Views are responsible for processing the incoming requests, interacting with the database or other data sources, and generating the appropriate response. They can perform 
+tasks such as fetching data, manipulating data, rendering templates, and returning HTTP responses in various formats (HTML, JSON, etc.).
+
+Typically, a view receives a request object as its first parameter and returns a response object. The request object contains information about the current HTTP request, 
+such as the requested URL, method (GET, POST, etc.), headers, and user session.
+
+Aftr running django development server when you hit the url http://localhost:8000/, you should see the Django welcome page with that moving rocket. (Refresh the page if 
+rocket isn't moving.)
+
+Here is what happens when you hit URL.
+
+
+             +------------------------+
+             |    Django URL          |
+             +------------------------+
+                           |
+                           v
+             +------------------------+
+             |    Django View         |
+             +------------------------+
+                           |
+                           v
+             +------------------------+
+             |   Process Request      |
+             +------------------------+
+                           |
+                           v
+             +------------------------+
+             |   Prepare Response     |
+             +------------------------+
+                           |
+                           v
+             +------------------------+
+             |   Generate HTTP        |
+             |   Response             |
+             +------------------------+
+                           |
+                           v
+             +------------------------+
+             |   Send Response        |
+             +------------------------+
+                           |
+                           v
+             +------------------------+
+             |   Web Browser          |
+             +------------------------+
+
+        
+By default, the Django project includes a URL pattern that maps the root URL ("/") to the django.views.generic.base.TemplateView class. The TemplateView class is configured 
+to use a template called index.html (or a similar name) to render the response. You can customize the welcome page by creating your own view and mapping to root URL ("/").
+
+To customize the welcome page in Django, you can follow these steps:
+
+1. Create a new view function: Open the views.py file in your Django project's app directory (e.g., myapp/views.py). Create a new function that will serve as your custom 
+  view. For example:
+
+
+            from django.http import HttpResponse
+
+            def welcome(request):
+                return HttpResponse("This is how you customise Welcome page into plain boring one.")
+
+        
+2. Define a URL pattern: Open the urls.py file in your Django project directory (e.g., mysite/urls.py). Import the view function you created and add a URL pattern to map 
+  it to the desired URL. For example:
+
+            from django.urls import path
+            from myapp.views import welcome
+
+            urlpatterns = [
+                path('', welcome, name='welcome'),
+            ]
+
+        
+By following these steps, you have created a new view function and mapped it to the root URL (/), replacing the default welcome page with your custom content.
+
+Now, try to change the URL into something interesting, and hit the url. http://localhost:8000/something_interesting
+
+            from django.urls import path
+            from myapp.views import welcome
+
+            urlpatterns = [
+                path('something_interesting/', welcome, name='welcome'),
+            ]
+
+        
+Welcome page will be accessible on above url. Try accessing http://localhost:8000/. You will see the Page not found error page as root URL ("/") is no longer configured 
+with any view.
