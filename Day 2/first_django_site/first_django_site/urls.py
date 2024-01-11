@@ -24,3 +24,4 @@ urlpatterns = [
     path('', welcome, name='welcome'),
     path('hello/', hello_world),
 ]
+https://github.com/k3rl15/django
