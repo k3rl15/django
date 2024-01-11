@@ -6,18 +6,18 @@ This project involves expanding the functionality of a Django project with a `Pr
 
 ### 1. Added Unique Constraint and Additional Fields in Profile Model
 
-- In `models.py`, added a unique constraint on the `name` field and included additional fields like `address` and `mobile_number`:
-- Applied migrations to update the database:
+- In `models.py`, added a unique constraint on the `name` field and included additional fields like `address` and `mobile_number`.
+- Applied migrations to update the database.
 
 ### 2. Implemented a New Endpoint to Retrieve a Single Profile by Name
 
 - Added a new view function `get_profile_by_name` in `views.py` to retrieve a profile by name and return the data in JSON format.
-- Updated `urls.py` to include the new endpoint:
+- Updated `urls.py` to include the new endpoint.
 
 ### 3. Implemented a New Endpoint to Update an Email Address
 
-- Added a new view function `update_email` in `views.py` to handle email updates:
-- Updated `urls.py` to include the new email update endpoint:
+- Added a new view function `update_email` in `views.py` to handle email updates.
+- Updated `urls.py` to include the new email update endpoint.
 
 ## Challenges Faced
 
