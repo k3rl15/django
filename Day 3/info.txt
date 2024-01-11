@@ -1,0 +1,102 @@
+Django Templates
+
+Concept:
+
+In this tutorial we will be focusing on creating Django web page which takes a name from user and display the list profile we have created so far.
+
+In order to store the profiles in database, we will be using Django model with the text field that stores name. This is going to be a post call which creates the 
+entry for names.
+
+We are going to show list of already created names as well. This is going to be get request.
+
+Enough said. Lets Build.
+
+Step 1. Create a model - Profile inside models.py
+
+
+            from django.db import models
+
+            # Create your models here.
+
+
+            class Profile(models.Model):
+                name = models.CharField(max_length=255)
+
+        
+Step 2. Run the following command to create the necessary database tables.
+
+
+            python manage.py makemigrations 
+            python manage.py migrate
+
+        
+Step 3. Update your views.py
+
+            from django.shortcuts import render, redirect
+            from myapp.models import Profile
+
+            def ProfileView(request):
+                if request.method == 'POST':
+                    name = request.POST.get('name', '')
+                    Profile.objects.create(name=name)
+                    return redirect('profile')
+                else:
+                    stored_names = Profile.objects.all()
+                    context = {'stored_names': stored_names}
+                    return render(request, 'profile.html', context)
+
+        
+Step 4. Create a new directory named `templates` under the project directory. Create a new HTML file named `profile.html` inside the `templates` directory. Add below 
+given in settings.py -> TEMPLATES
+
+            'DIRS': [os.path.join(BASE_DIR, 'templates')] 
+        
+Update name.html
+
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <title>Profile Directory</title>
+                </head>
+                <body>
+                <div style="padding: 20px;">
+                    <h2>Create Profile</h2>
+
+                     <form method="POST" action="{% url 'profile' %}">
+                        {% csrf_token %}
+                        <input type="text" name="name" placeholder="Enter your name">
+                        <button type="submit">Submit</button>
+                    </form>
+
+                    <h2>List of profiles:</h2>
+                    <ul>
+                        {% for stored_name in stored_names %}
+                        <h4>Profile info for {{ stored_name.name }} </h4>
+                        <li>Name: {{ stored_name.name }}</li>
+                        {% empty %}
+                        <li>No names stored yet.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                </body>
+                </html>
+
+        
+
+Step 5. Update urls.py
+
+            from django.contrib import admin
+            from django.urls import path
+            from myapp.views import ProfileView
+
+            urlpatterns = [
+                path('admin/', admin.site.urls),
+                path('name/', ProfileView, name='profile'),
+
+            ]
+        
+Step 6. Test the application.
+1. Run the Django server using runserver command.
+2. Access the application in your web browser at http://localhost:8000/name
+3. Add users through the form and check the user list and ensure that the data is displayed correctly.
