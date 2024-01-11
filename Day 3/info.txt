@@ -1,0 +1,94 @@
+Django templates are a powerful feature that allows you to generate dynamic HTML, XML, or other markup within your Django web applications. Templates use a syntax similar 
+to Python to express logic, allowing you to generate content based on data provided by your views.
+
+Here are some key concepts and features related to Django templates:
+
+### 1. Template Tags and Filters:
+
+- **Template Tags:** Enclosed within `{% %}`, these are used for control flow and logic in the template.
+
+  ```html
+  {% if user.is_authenticated %}
+      <p>Welcome, {{ user.username }}!</p>
+  {% else %}
+      <p>Please log in.</p>
+  {% endif %}
+  ```
+
+- **Template Filters:** Applied using `{{ }}`, these modify variables or values in the template.
+
+  ```html
+  {{ some_text|lower }}
+  ```
+
+### 2. Variables:
+
+Variables are enclosed within `{{ }}` and are placeholders for values passed from the view.
+
+```html
+<p>Hello, {{ user.username }}!</p>
+```
+
+### 3. Template Inheritance:
+
+Templates can inherit from other templates, allowing you to create a base template and extend it in child templates.
+
+**base.html:**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Default Title{% endblock %}</title>
+</head>
+<body>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+```
+
+**child.html:**
+
+```html
+{% extends "base.html" %}
+
+{% block title %}Child Page{% endblock %}
+
+{% block content %}
+    <h1>Welcome to the child page!</h1>
+{% endblock %}
+```
+
+### 4. Template Tags for Looping:
+
+Django templates provide `{% for item in items %}` for iterating over lists.
+
+```html
+<ul>
+    {% for item in items %}
+        <li>{{ item }}</li>
+    {% endfor %}
+</ul>
+```
+
+### 5. Template Filters for Date and Time:
+
+Django templates offer filters for formatting date and time.
+
+```html
+{{ some_date|date:"F j, Y" }}
+```
+
+### 6. Static Files:
+
+Use the `{% load static %}` tag to include static files in your templates.
+
+```html
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+```
+
+These are just a few basic features of Django templates. As your project grows, you can explore more advanced concepts like template tags, inclusion tags, and custom 
+template filters to enhance your template logic.
