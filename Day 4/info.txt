@@ -1,0 +1,91 @@
+CRUD APIs for Profile Management System
+
+Concept:
+
+An API is like a set of rules that allow different software programs to talk to each other and work together. It's like a blueprint that shows how they should interact. 
+It helps developers integrate their apps with existing systems by providing a structured framework and guidelines. APIs make communication between software components 
+easier and encourage collaboration and creativity. In simple terms, an API acts as a bridge that connects different software programs, allowing them to work together 
+smoothly.
+
+In this tutorial we will be creating APIs for Profile Management System. The profile will have basic attributes - name, email, mobile number etc. We will be creating 
+endpoints to perform various CRUD operations - GET, PATCH, PUT, POST etc.
+
+Step 1. Update viwes.py
+1. Create a view to get the list of profiles. This will be GET request.
+2. Create a view to add a new profile. This will be POST request.
+
+
+            from myapp.models import Profile
+            from django.http import JsonResponse
+            from django.views.decorators.csrf import csrf_exempt
+            from django.core import serializers
+            import json
+
+
+            @csrf_exempt
+            def ProfileView(request):
+                """
+                Description:
+                Creates a new profile with the provided information.
+                Get the list of profiles already created.
+
+                Parameters:
+
+                POST: 
+                name (str): The name of the profile.
+                email (str): The email address of the profile.
+
+                GET: None
+                """
+
+                if request.method == 'GET':
+                    profiles = Profile.objects.all()
+                    data = [{'id': profile.id, 'name': profile.name, 'email': profile.email} for profile in profiles]
+                    return JsonResponse(data, safe=False)
+                elif request.method == 'POST':
+                    name = request.POST.get('name')
+                    email = request.POST.get('email')
+                    profile = Profile(name=name, email=email)
+                    profile.save()
+                    serialized_obj = serializers.serialize('json', [ profile, ])
+                    data = json.loads(serialized_obj)
+                    return JsonResponse({'message': 'Profile created successfully', 'data': data[0]})
+                else:
+                    return JsonResponse({'message': 'Method not allowed'}, status=405)
+
+
+            def ProfileDetailView(request, pk):
+                profile = Profile.objects.get(id=pk)    
+                if request.method == 'GET':
+                    data = {'id': profile.id, 'name': profile.name,'email': profile.email}
+                    return JsonResponse(data)
+
+        
+2. Update urls.py to add your endpoints.
+
+            from django.contrib import admin
+            from django.urls import path
+            from myapp.views import ProfileView, ProfileDetailView
+
+            urlpatterns = [
+                path('admin/', admin.site.urls),
+                path('profiles/', ProfileView, name='profiles'),
+                path('profiles//', ProfileDetailView, name='profile_detail'),
+
+        
+Step 3: Test the POST API
+- Use a tool like CURL or Postman to send a POST request to `http://localhost:8000/profiles`.
+- Include a JSON payload in the request body containing the profile data.
+- The API should save the profile data in the db and return the saved profile object in the API response.
+
+Example JSON payload for the POST request:
+            
+                {
+                  "name": "Jane Doe",
+                  "email": "jane@example.com"
+                }
+            
+        
+Step 4: Verify the Saved Data
+- Send a GET request to `http://localhost:8000/profiles` to retrieve all profiles.
+- The API response should include the newly created profile in the list.
