@@ -1,0 +1,86 @@
+Django Models and ORM
+
+Concept:
+
+Models in Django are Python classes that represent database tables. They define the structure and behavior of the data in your application. Models provide a convenient way
+to interact with the database and handle complex database operations. They abstract away the underlying SQL syntax and allow you to focus on writing Python code to work 
+with the data.
+
+Defining Models:
+Models are typically defined in a Python file called models.py within your Django project. Each model class represents a database table, and each attribute of the class
+represents a field/column in the table. Fields define the type of data that can be stored in the corresponding column (e.g., text, numbers, dates, etc.).Django provides 
+various field types like CharField, IntegerField, DateField, etc., to match different data types.
+
+Model Relationships:
+Models can have relationships with other models, defining how they are related in the database. Common relationship types include ForeignKey, OneToOneField, and 
+ManyToManyField. Relationships allow you to connect models and establish associations between them (e.g., one-to-one, one-to-many, or many-to-many).
+
+Database Operations:
+Django's models provide a powerful API for working with the database without writing SQL queries. You can use model objects to perform CRUD operations (Create, Retrieve, 
+Update, Delete) on the database records.
+
+Example: We have a Product model defined in our Django app
+
+
+        from django.db import models
+
+        class Product(models.Model):
+            name = models.CharField(max_length=100)
+            price = models.DecimalField(max_digits=8, decimal_places=2)
+            description = models.TextField(null=True, blank=True)
+            category = models.CharField(max_length=100)
+            created_at = models.DateTimeField(auto_now_add=True)
+
+        
+Now, let's perform CRUD operations using the Django ORM:
+1. Retrieving Objects:
+
+        # Import the model
+        from yourapp.models import Product
+
+        # Retrieving all products
+        all_products = Product.objects.all()
+
+        # Retrieve products with a specific condition
+        electronics_products = Product.objects.filter(category='Electronics')
+
+        # Retrieve products that meet multiple conditions
+        expensive_electronics = Product.objects.filter(category='Electronics', price__gt=1000.0)
+
+        
+2. Creating Objects:
+
+        # Import the model
+        from yourapp.models import Product
+
+        # Create a new product
+        product = Product(name='iPhone', price=999.99, category='Electronics')
+        product.save()
+            
+        
+3. Updating Objects:
+
+        # Import the model
+        from yourapp.models import Product
+
+        # Retrieve the product to update
+        product = Product.objects.get(id=1)
+
+        # Update the product's price
+        product.price = 899.99
+        product.save()
+
+        
+4. Deleting Objects:
+
+        # Import the model
+        from yourapp.models import Product
+
+        # Retrieve the product to delete
+        product = Product.objects.get(id=1)
+
+        # Delete the product
+        product.delete()
+
+        
+By defining models in Django, you can create a high-level representation of your application's data structure.
